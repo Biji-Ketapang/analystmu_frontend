@@ -5,8 +5,7 @@ import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { useSidebar } from "../context/SidebarContext";
 import {
-  FaThLarge, FaCalendarAlt, FaChevronDown, FaListUl, FaFileAlt, FaChartPie, FaCube, FaPlug, FaTable, FaUserCircle,
-  FaChartBar,
+  FaCalendarAlt, FaChevronDown, FaListUl, FaFileAlt, FaChartPie, FaCube, FaPlug, FaTable, FaChartBar,
   FaRegUser
 } from "react-icons/fa";
 import { FiMoreHorizontal } from "react-icons/fi";
