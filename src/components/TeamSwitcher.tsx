@@ -26,7 +26,7 @@ const teams = [
   },
 ];
 
-export function TeamSwitcher() {
+export function TeamSwitcher({ showText = true }: { showText?: boolean }) {
   const { account, setAccount } = useAccount();
   const [open, setOpen] = useState(false);
   const activeTeam = teams.find((t) => t.name === account) || teams[0];
@@ -39,11 +39,13 @@ export function TeamSwitcher() {
         aria-label="Switch Team"
       >
         {/* Logo kampus: gunakan style w-8 h-auto agar proporsional, tanpa border/frame/rounded */}
-  <Image src={activeTeam.avatar} alt={activeTeam.name} width={36} height={36} className="w-9 h-auto object-contain" />
-        <div className="flex flex-col text-left">
-          <span className="font-semibold text-sm text-gray-800 dark:text-white">{activeTeam.name}</span>
-          <span className="text-xs text-gray-400">{activeTeam.plan}</span>
-        </div>
+        <Image src={activeTeam.avatar} alt={activeTeam.name} width={36} height={36} className="w-9 h-auto object-contain" />
+        {showText && (
+          <div className="flex flex-col text-left">
+            <span className="font-semibold text-sm text-gray-800 dark:text-white">{activeTeam.name}</span>
+            <span className="text-xs text-gray-400">{activeTeam.plan}</span>
+          </div>
+        )}
         <ChevronDown 
           className={`ml-auto w-4 h-4 text-gray-400 transition-transform duration-200 ${
             open ? "rotate-180" : ""

@@ -330,7 +330,7 @@ const AppSidebar: React.FC = () => {
         </Link>
         {/* Team Switcher untuk cross account */}
         <div className="mt-2">
-          <TeamSwitcher />
+          <TeamSwitcher showText={isExpanded || isHovered || isMobileOpen} />
         </div>
       </div>
       <div className="flex flex-col overflow-y-auto duration-300 ease-linear no-scrollbar">
