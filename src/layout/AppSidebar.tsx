@@ -18,6 +18,7 @@ import {
   UserCircleIcon,
 } from "../icons/index";
 import SidebarWidget from "./SidebarWidget";
+import { TeamSwitcher } from "@/components/TeamSwitcher";
 
 type NavItem = {
   name: string;
@@ -304,7 +305,7 @@ const AppSidebar: React.FC = () => {
       onMouseLeave={() => setIsHovered(false)}
     >
       <div
-        className={`py-8 flex  ${
+        className={`py-8 flex flex-col gap-4 ${
           !isExpanded && !isHovered ? "lg:justify-center" : "justify-start"
         }`}
       >
@@ -335,6 +336,10 @@ const AppSidebar: React.FC = () => {
             />
           )}
         </Link>
+        {/* Team Switcher untuk cross account */}
+        <div className="mt-2">
+          <TeamSwitcher />
+        </div>
       </div>
       <div className="flex flex-col overflow-y-auto duration-300 ease-linear no-scrollbar">
         <nav className="mb-6">
