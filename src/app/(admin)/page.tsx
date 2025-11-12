@@ -9,8 +9,8 @@ import DemographicCard from "@/components/ecommerce/DemographicCard";
 
 export const metadata: Metadata = {
   title:
-    "Next.js E-commerce Dashboard | TailAdmin - Next.js Dashboard Template",
-  description: "This is Next.js Home for TailAdmin Dashboard Template",
+    "AnalysMU | Workshop Social Media Analysis Final Project",
+  description: "This is AnalysMU Home Dashboard",
 };
 
 export default function Ecommerce() {
