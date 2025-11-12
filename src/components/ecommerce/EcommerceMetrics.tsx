@@ -1,7 +1,7 @@
 "use client";
 import React from "react";
 import Badge from "../ui/badge/Badge";
-import { ArrowDownIcon, ArrowUpIcon, BoxIconLine, GroupIcon } from "@/icons";
+import { FaReact, FaRegHeart, FaRegCommentDots, FaUsers, FaArrowUp } from "react-icons/fa";
 import { usePostData } from "@/hooks/usePostData";
 
 export const EcommerceMetrics = () => {
@@ -41,7 +41,7 @@ export const EcommerceMetrics = () => {
       {/* <!-- Total Postingan --> */}
       <div className="rounded-2xl border border-gray-200 bg-white p-5 dark:border-gray-800 dark:bg-white/[0.03] md:p-6">
         <div className="flex items-center justify-center w-12 h-12 bg-blue-100 rounded-xl dark:bg-blue-900/30">
-          <BoxIconLine className="text-blue-600 dark:text-blue-400" />
+          <FaReact className="text-blue-600 dark:text-blue-400" size={32} />
         </div>
 
         <div className="flex items-end justify-between mt-5">
@@ -59,7 +59,7 @@ export const EcommerceMetrics = () => {
       {/* <!-- Rata-rata Like --> */}
       <div className="rounded-2xl border border-gray-200 bg-white p-5 dark:border-gray-800 dark:bg-white/[0.03] md:p-6">
         <div className="flex items-center justify-center w-12 h-12 bg-pink-100 rounded-xl dark:bg-pink-900/30">
-          <GroupIcon className="text-pink-600 dark:text-pink-400" />
+          <FaRegHeart className="text-pink-600 dark:text-pink-400" size={32} />
         </div>
 
         <div className="flex items-end justify-between mt-5">
@@ -72,7 +72,7 @@ export const EcommerceMetrics = () => {
             </h4>
           </div>
           <Badge color="success">
-            <ArrowUpIcon />
+            <FaArrowUp className="inline mr-1" />
             Per Post
           </Badge>
         </div>
@@ -81,7 +81,7 @@ export const EcommerceMetrics = () => {
       {/* <!-- Rata-rata Komentar --> */}
       <div className="rounded-2xl border border-gray-200 bg-white p-5 dark:border-gray-800 dark:bg-white/[0.03] md:p-6">
         <div className="flex items-center justify-center w-12 h-12 bg-green-100 rounded-xl dark:bg-green-900/30">
-          <BoxIconLine className="text-green-600 dark:text-green-400" />
+          <FaRegCommentDots className="text-green-600 dark:text-green-400" size={32} />
         </div>
 
         <div className="flex items-end justify-between mt-5">
@@ -94,16 +94,15 @@ export const EcommerceMetrics = () => {
             </h4>
           </div>
           <Badge color="success">
-            <ArrowUpIcon />
             Per Post
           </Badge>
         </div>
       </div>
 
-      {/* <!-- Total Followers (Placeholder) --> */}
+      {/* <!-- Total Followers --> */}
       <div className="rounded-2xl border border-gray-200 bg-white p-5 dark:border-gray-800 dark:bg-white/[0.03] md:p-6">
         <div className="flex items-center justify-center w-12 h-12 bg-purple-100 rounded-xl dark:bg-purple-900/30">
-          <GroupIcon className="text-purple-600 dark:text-purple-400" />
+          <FaUsers className="text-purple-600 dark:text-purple-400" size={32} />
         </div>
 
         <div className="flex items-end justify-between mt-5">
@@ -112,7 +111,7 @@ export const EcommerceMetrics = () => {
               Total Followers
             </span>
             <h4 className="mt-2 font-bold text-gray-800 text-title-sm dark:text-white/90">
-              --
+              {data.totalFollowers?.toLocaleString?.() ?? "--"}
             </h4>
           </div>
           <span className="text-xs text-gray-500 dark:text-gray-400">

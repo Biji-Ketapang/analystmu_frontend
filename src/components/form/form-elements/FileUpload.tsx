@@ -41,10 +41,11 @@ const FileUpload: React.FC = () => {
         if (jsonData.length > 0) {
           const headerRow = jsonData[0] as string[];
           setHeaders(headerRow);
-          const rows = jsonData.slice(1).map((row: any) => {
+          const rows = jsonData.slice(1).map((row: unknown) => {
             const obj: DataRow = {};
+            const rowArr = row as (string | number)[];
             headerRow.forEach((header, index) => {
-              obj[header] = row[index] || "";
+              obj[header] = rowArr[index] || "";
             });
             return obj;
           });

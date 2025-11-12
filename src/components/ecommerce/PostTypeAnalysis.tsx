@@ -3,7 +3,7 @@ import React from "react";
 import { ApexOptions } from "apexcharts";
 import dynamic from "next/dynamic";
 import { usePostData } from "@/hooks/usePostData";
-import { MoreDotIcon } from "@/icons";
+import { MoreDotIcon } from "@/icons/custom-icons";
 import { Dropdown } from "../ui/dropdown/Dropdown";
 import { DropdownItem } from "../ui/dropdown/DropdownItem";
 import { useState } from "react";
@@ -17,13 +17,13 @@ export default function PostTypeAnalysis() {
   const [isOpen, setIsOpen] = useState(false);
 
   // Gabungkan semua tipe 'Image' dan 'Video', serta ambil 'Carousel'
-  let filteredStats: { type: string; count: number; percentage: number }[] = [];
+  const filteredStats: { type: string; count: number; percentage: number }[] = [];
   if (data) {
     let imageCount = 0;
     let imagePercentage = 0;
     let videoCount = 0;
     let videoPercentage = 0;
-    let carouselStat = data.postTypeStats.find(s => s.type.toLowerCase() === 'carousel');
+  const carouselStat = data.postTypeStats.find(s => s.type.toLowerCase() === 'carousel');
     data.postTypeStats.forEach(s => {
       if (s.type.toLowerCase().includes('image')) {
         imageCount += s.count;

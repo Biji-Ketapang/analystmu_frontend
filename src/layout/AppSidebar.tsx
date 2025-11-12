@@ -5,18 +5,11 @@ import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { useSidebar } from "../context/SidebarContext";
 import {
-  BoxCubeIcon,
-  CalenderIcon,
-  ChevronDownIcon,
-  GridIcon,
-  HorizontaLDots,
-  ListIcon,
-  PageIcon,
-  PieChartIcon,
-  PlugInIcon,
-  TableIcon,
-  UserCircleIcon,
-} from "../icons/index";
+  FaThLarge, FaCalendarAlt, FaChevronDown, FaListUl, FaFileAlt, FaChartPie, FaCube, FaPlug, FaTable, FaUserCircle,
+  FaChartBar,
+  FaRegUser
+} from "react-icons/fa";
+import { FiMoreHorizontal } from "react-icons/fi";
 import SidebarWidget from "./SidebarWidget";
 import { TeamSwitcher } from "@/components/TeamSwitcher";
 
@@ -29,34 +22,34 @@ type NavItem = {
 
 const navItems: NavItem[] = [
   {
-    icon: <GridIcon />,
+    icon: <FaChartBar className="w-5 h-5" />,
     name: "Dashboard",
     subItems: [{ name: "Summary", path: "/", pro: false }],
   },
   {
-    icon: <CalenderIcon />,
+    icon: <FaCalendarAlt className="w-5 h-5" />,
     name: "Calendar",
     path: "/calendar",
   },
   {
-    icon: <UserCircleIcon />,
+    icon: <FaRegUser className="w-5 h-5" />,
     name: "User Profile",
     path: "/profile",
   },
 
   {
     name: "Forms",
-    icon: <ListIcon />,
+    icon: <FaListUl className="w-5 h-5" />,
     subItems: [{ name: "Form Elements", path: "/form-elements", pro: false }],
   },
   {
     name: "Tables",
-    icon: <TableIcon />,
+    icon: <FaTable className="w-5 h-5" />,
     subItems: [{ name: "Basic Tables", path: "/basic-tables", pro: false }],
   },
   {
     name: "Pages",
-    icon: <PageIcon />,
+    icon: <FaFileAlt className="w-5 h-5" />,
     subItems: [
       { name: "Blank Page", path: "/blank", pro: false },
       { name: "404 Error", path: "/error-404", pro: false },
@@ -66,7 +59,7 @@ const navItems: NavItem[] = [
 
 const othersItems: NavItem[] = [
   {
-    icon: <PieChartIcon />,
+    icon: <FaChartPie className="w-5 h-5" />,
     name: "Charts",
     subItems: [
       { name: "Line Chart", path: "/line-chart", pro: false },
@@ -74,7 +67,7 @@ const othersItems: NavItem[] = [
     ],
   },
   {
-    icon: <BoxCubeIcon />,
+    icon: <FaCube className="w-5 h-5" />,
     name: "UI Elements",
     subItems: [
       { name: "Alerts", path: "/alerts", pro: false },
@@ -86,7 +79,7 @@ const othersItems: NavItem[] = [
     ],
   },
   {
-    icon: <PlugInIcon />,
+    icon: <FaPlug className="w-5 h-5" />,
     name: "Authentication",
     subItems: [
       { name: "Sign In", path: "/signin", pro: false },
@@ -132,7 +125,7 @@ const AppSidebar: React.FC = () => {
                 <span className={`menu-item-text`}>{nav.name}</span>
               )}
               {(isExpanded || isHovered || isMobileOpen) && (
-                <ChevronDownIcon
+                <FaChevronDown
                   className={`ml-auto w-5 h-5 transition-transform duration-200  ${
                     openSubmenu?.type === menuType &&
                     openSubmenu?.index === index
@@ -355,7 +348,7 @@ const AppSidebar: React.FC = () => {
                 {isExpanded || isHovered || isMobileOpen ? (
                   "Menu"
                 ) : (
-                  <HorizontaLDots />
+                  <FiMoreHorizontal className="w-5 h-5" />
                 )}
               </h2>
               {renderMenuItems(navItems, "main")}
@@ -372,7 +365,7 @@ const AppSidebar: React.FC = () => {
                 {isExpanded || isHovered || isMobileOpen ? (
                   "Others"
                 ) : (
-                  <HorizontaLDots />
+                  <FiMoreHorizontal className="w-5 h-5" />
                 )}
               </h2>
               {renderMenuItems(othersItems, "others")}

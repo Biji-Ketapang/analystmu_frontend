@@ -1,5 +1,6 @@
 "use client";
 import * as React from "react";
+import Image from "next/image";
 import { useState } from "react";
 import { useAccount } from "@/context/AccountContext";
 import { GalleryVerticalEnd, AudioWaveform, Command, ChevronDown } from "lucide-react";
@@ -38,7 +39,7 @@ export function TeamSwitcher() {
         aria-label="Switch Team"
       >
         {/* Logo kampus: gunakan style w-8 h-auto agar proporsional, tanpa border/frame/rounded */}
-        <img src={activeTeam.avatar} alt={activeTeam.name} className="w-9 h-auto object-contain" />
+  <Image src={activeTeam.avatar} alt={activeTeam.name} width={36} height={36} className="w-9 h-auto object-contain" />
         <div className="flex flex-col text-left">
           <span className="font-semibold text-sm text-gray-800 dark:text-white">{activeTeam.name}</span>
           <span className="text-xs text-gray-400">{activeTeam.plan}</span>
@@ -60,10 +61,10 @@ export function TeamSwitcher() {
             <button
               key={team.name}
               className={`flex items-center gap-3 w-full px-3 py-2 transition-all ${account === team.name ? "bg-blue-100 dark:bg-blue-900/30" : "hover:bg-gray-50 dark:hover:bg-gray-700"}`}
-              onClick={() => { setAccount(team.name as any); setOpen(false); }}
+              onClick={() => { setAccount(team.name as typeof account); setOpen(false); }}
             >
               {/* Logo kampus di dropdown: gunakan style w-8 h-auto agar proporsional, tanpa border/frame/rounded */}
-              <img src={team.avatar} alt={team.name} className="w-8 h-auto object-contain" />
+              <Image src={team.avatar} alt={team.name} width={32} height={32} className="w-8 h-auto object-contain" />
               <div className="flex flex-col text-left">
                 <span className={`font-semibold text-sm ${account === team.name ? "text-blue-600 dark:text-blue-400" : "text-gray-800 dark:text-white"}`}>{team.name}</span>
                 <span className="text-xs text-gray-400">{team.plan}</span>
