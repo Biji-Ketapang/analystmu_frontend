@@ -2,12 +2,14 @@ import type { Metadata } from "next";
 import { EcommerceMetrics } from "@/components/ecommerce/EcommerceMetrics";
 import React from "react";
 import MonthlySalesChart from "@/components/ecommerce/MonthlySalesChart";
-import StatisticsChart from "@/components/ecommerce/StatisticsChart";
-import RecentOrders from "@/components/ecommerce/RecentOrders";
-import DemographicCard from "@/components/ecommerce/DemographicCard";
+// import StatisticsChart from "@/components/ecommerce/StatisticsChart";
+// import RecentOrders from "@/components/ecommerce/RecentOrders";
+// import DemographicCard from "@/components/ecommerce/DemographicCard";
 import PostTypeAnalysis from "@/components/ecommerce/PostTypeAnalysis";
 import EngagementByPostType from "@/components/ecommerce/EngagementByPostType";
 import TopEngagementPosts from "@/components/ecommerce/TopEngagementPosts";
+import PostMonthWeek from "@/components/ecommerce/PostMonthWeek";
+import TimeOfDayChart from "@/components/ecommerce/TimeOfday";
 
 export const metadata: Metadata = {
   title:
@@ -41,16 +43,20 @@ export default function Ecommerce() {
 
       {/* Additional Charts */}
       <div className="col-span-12">
-        <StatisticsChart />
+        <TimeOfDayChart />
       </div>
 
-      <div className="col-span-12 xl:col-span-5">
+      <div className="col-span-12">
+        <PostMonthWeek />
+      </div>
+
+      {/* <div className="col-span-12 xl:col-span-5">
         <DemographicCard />
-      </div>
+      </div> */}
 
-      <div className="col-span-12 xl:col-span-7">
+      {/* <div className="col-span-12 xl:col-span-7">
         <RecentOrders />
-      </div>
+      </div> */}
     </div>
   );
 }
