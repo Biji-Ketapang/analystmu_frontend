@@ -28,18 +28,22 @@ export default function Ecommerce() {
       </div>
 
       {/* Post Type Analysis - Full Width */}
-      <div className="col-span-12">
+      <div className="col-span-12 xl:col-span-5">
         <PostTypeAnalysis />
       </div>
 
       {/* Engagement by Post Type & Monthly Engagement */}
       <div className="col-span-12 space-y-6 xl:col-span-7">
         <EngagementByPostType />
+      </div>
+
+      {/* Monthly Engagement */}
+      <div className="col-span-12 xl:col-span-12">
         <MonthlySalesChart />
       </div>
 
       {/* Top Posts & Target */}
-      <div className="col-span-12 xl:col-span-5">
+      <div className="col-span-12 xl:col-span-12">
         <TopEngagementPosts />
       </div>
 
@@ -51,11 +55,11 @@ export default function Ecommerce() {
         <TimeDayHeatmap />
       </div>
 
-      <div className="col-span-12">
+      <div className="col-span-12 xl:col-span-6">
         <WordCloudHashtag />
       </div>
 
-      <div className="col-span-12">
+      <div className="col-span-12 xl:col-span-6">
         <HashtagTrendChart />
       </div>
 
