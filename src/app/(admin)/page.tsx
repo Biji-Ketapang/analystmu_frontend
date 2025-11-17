@@ -9,7 +9,9 @@ import PostTypeAnalysis from "@/components/ecommerce/PostTypeAnalysis";
 import EngagementByPostType from "@/components/ecommerce/EngagementByPostType";
 import TopEngagementPosts from "@/components/ecommerce/TopEngagementPosts";
 import PostMonthWeek from "@/components/ecommerce/PostMonthWeek";
-import TimeOfDayChart from "@/components/ecommerce/TimeOfday";
+import TimeDayHeatmap from "@/components/ecommerce/TimeOfday";
+import WordCloudHashtag from "@/components/ecommerce/WordCloudHashtag";
+import HashtagTrendChart from "@/components/ecommerce/HashtagTrendChart";
 
 export const metadata: Metadata = {
   title:
@@ -41,17 +43,24 @@ export default function Ecommerce() {
         <TopEngagementPosts />
       </div>
 
-      {/* Additional Charts */}
-      <div className="col-span-12">
-        <TimeOfDayChart />
-      </div>
-
       <div className="col-span-12">
         <PostMonthWeek />
       </div>
 
+      <div className="col-span-12">
+        <TimeDayHeatmap />
+      </div>
+
+      <div className="col-span-12">
+        <WordCloudHashtag />
+      </div>
+
+      <div className="col-span-12">
+        <HashtagTrendChart />
+      </div>
+
       {/* <div className="col-span-12 xl:col-span-5">
-        <DemographicCard />
+        <WordCloudHashtag />
       </div> */}
 
       {/* <div className="col-span-12 xl:col-span-7">

@@ -1,3 +1,5 @@
+import Papa from "papaparse";
+
 export interface Post {
   post_type: string;
   caption: string;
@@ -17,6 +19,7 @@ export interface ProcessedPostInsights {
   };
   hashtagWordCount: Record<string, number>;
   hashtagTrends: { date: string; count: number }[];
+  timeDayHeatmap: Record<string, Record<number, number>>;
 }
 
 const TIME_BLOCKS = [
@@ -30,33 +33,27 @@ const TIME_BLOCKS = [
   [22, 23],
 ];
 
-const DAYS_ORDER = ["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"];
+const DAYS_ORDER = [
+  "Monday",
+  "Tuesday",
+  "Wednesday",
+  "Thursday",
+  "Friday",
+  "Saturday",
+  "Sunday",
+];
 
-// Parse CSV
 export function parseCSVPost(csvText: string): Post[] {
-  const lines = csvText.split("\n");
-  // Skip header row:
-  // const headers = lines[0].split(",");
+  const result = Papa.parse(csvText, { header: true, skipEmptyLines: true });
 
-  const posts: Post[] = [];
-
-  for (let i = 1; i < lines.length; i++) {
-    const line = lines[i].trim();
-    if (!line) continue;
-
-    const values = line.split(",");
-
-    posts.push({
-      post_type: values[0]?.trim() || "",
-      caption: values[1]?.trim() || "",
-      like_count: parseInt(values[2]) || 0,
-      comment_count: parseInt(values[3]) || 0,
-      date: values[4]?.trim() || "",
-      time: values[5]?.trim() || "",
-    });
-  }
-
-  return posts;
+  return result.data.map((row: any) => ({
+    post_type: row.post_type || "",
+    caption: row.caption || "",
+    like_count: parseInt(row.like_count) || 0,
+    comment_count: parseInt(row.comment_count) || 0,
+    date: row.date || "",
+    time: row.time || "",
+  }));
 }
 
 export function processPostData2(posts: Post[]): ProcessedPostInsights {
@@ -72,6 +69,18 @@ export function processPostData2(posts: Post[]): ProcessedPostInsights {
     .fill(null)
     .map(() => Array(8).fill(0));
 
+  const rawTimeDaySum: Record<string, Record<number, number>> = {};
+  const rawTimeDayCount: Record<string, Record<number, number>> = {};
+
+  DAYS_ORDER.forEach((day) => {
+    rawTimeDaySum[day] = {};
+    rawTimeDayCount[day] = {};
+    for (let h = 0; h < 24; h++) {
+      rawTimeDaySum[day][h] = 0;
+      rawTimeDayCount[day][h] = 0;
+    }
+  });
+
   let morning = 0,
     afternoon = 0,
     evening = 0;
@@ -83,75 +92,93 @@ export function processPostData2(posts: Post[]): ProcessedPostInsights {
   const hashtagTrendMap = new Map<string, number>();
 
   posts.forEach((p) => {
-    const d = new Date(p.date + "T" + p.time);
+    const d = new Date(`${p.date}T${p.time}`);
     const month = d.getMonth();
     const weekIdx = Math.min(Math.floor(d.getDate() / 7), 3);
 
-    // === POST HEATMAP ===
+    // POST COUNT HEATMAP
     postHeatmap[weekIdx][month]++;
 
-    // === ENGAGEMENT HEATMAP ===
-    const dayIdx = DAYS_ORDER.indexOf(
-      d.toLocaleDateString("en-US", { weekday: "long" })
-    );
-
+    // TIME BLOCK
+    const dayName = d.toLocaleDateString("en-US", { weekday: "long" });
+    const dayIdx = DAYS_ORDER.indexOf(dayName);
     const hour = d.getHours();
-    const blockIdx = TIME_BLOCKS.findIndex(
-      ([s, e]) => hour >= s && hour <= e
-    );
+    const blockIdx = TIME_BLOCKS.findIndex(([s, e]) => hour >= s && hour <= e);
 
-    engagementHeatmap[dayIdx][blockIdx] +=
-      p.like_count + p.comment_count;
+    const engagement = p.like_count + p.comment_count;
 
+    engagementHeatmap[dayIdx][blockIdx] += engagement;
     engagementCount[dayIdx][blockIdx]++;
 
-    const eng = p.like_count + p.comment_count;
+    // TIME OF DAY
     if (hour < 12) {
-      morning += eng;
+      morning += engagement;
       morningC++;
     } else if (hour < 17) {
-      afternoon += eng;
+      afternoon += engagement;
       afternoonC++;
     } else {
-      evening += eng;
+      evening += engagement;
       eveningC++;
     }
 
-    // === HASHTAG WORDCLOUD ===
-    const tags = p.caption.match(/#[a-zA-Z0-9_]+/g) || [];
+    p.caption = p.caption || ""; // memastikan caption tidak null/undefined
+
+    const words = p.caption.toLowerCase().split(/\s+/);
+
+    // ambil kata yang panjangnya >= 6
+    const tags = words.filter(w => /^[a-z]+$/.test(w) && w.length >= 6);
+
+
+
     tags.forEach((tag) => {
       const key = tag.toLowerCase();
       hashtagWordCount[key] = (hashtagWordCount[key] || 0) + 1;
     });
 
-    // === HASHTAG TREND ===
     const dateKey = p.date;
-    hashtagTrendMap.set(
-      dateKey,
-      (hashtagTrendMap.get(dateKey) || 0) + tags.length
-    );
+    hashtagTrendMap.set(dateKey, (hashtagTrendMap.get(dateKey) || 0) + tags.length);
+
+    // RAW 7×24
+    rawTimeDaySum[dayName][hour] += engagement;
+    rawTimeDayCount[dayName][hour]++;
   });
 
+  // AVERAGE HEATMAP
   const finalEngagementHeatmap = engagementHeatmap.map((row, i) =>
     row.map((val, j) =>
-      engagementCount[i][j]
-        ? Math.round(val / engagementCount[i][j])
-        : 0
+      engagementCount[i][j] ? Math.round(val / engagementCount[i][j]) : 0
     )
   );
+
+  // 7 × 24 HEATMAP
+  const timeDayHeatmap: Record<string, Record<number, number>> = {};
+
+  DAYS_ORDER.forEach((day) => {
+    timeDayHeatmap[day] = {};
+    for (let h = 0; h < 24; h++) {
+      const total = rawTimeDaySum[day][h];
+      const cnt = rawTimeDayCount[day][h];
+      timeDayHeatmap[day][h] = cnt ? total / cnt : 0;
+    }
+  });
 
   return {
     postHeatmap,
     engagementHeatmap: finalEngagementHeatmap,
+
     timeOfDayEngagement: {
       morning: morningC ? morning / morningC : 0,
       afternoon: afternoonC ? afternoon / afternoonC : 0,
       evening: eveningC ? evening / eveningC : 0,
     },
+
     hashtagWordCount,
     hashtagTrends: Array.from(hashtagTrendMap).map(([date, count]) => ({
       date,
       count,
     })),
+
+    timeDayHeatmap,
   };
 }
