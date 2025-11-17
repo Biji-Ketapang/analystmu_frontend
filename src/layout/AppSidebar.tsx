@@ -7,8 +7,6 @@ import { useSidebar } from "../context/SidebarContext";
 import {
   FaCalendarAlt, FaChevronDown, FaListUl, FaFileAlt, FaChartPie, FaCube, FaPlug, FaTable, FaChartBar,
   FaRegUser,
-  FaMicrochip,
-  FaLaptopMedical,
   FaBolt
 } from "react-icons/fa";
 import { FiMoreHorizontal } from "react-icons/fi";
