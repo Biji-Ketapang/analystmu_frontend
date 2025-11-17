@@ -44,9 +44,9 @@ const DAYS_ORDER = [
 ];
 
 export function parseCSVPost(csvText: string): Post[] {
-  const result = Papa.parse(csvText, { header: true, skipEmptyLines: true });
+  const result = Papa.parse<Record<string, string>>(csvText, { header: true, skipEmptyLines: true });
 
-  return result.data.map((row: any) => ({
+  return (result.data as Record<string, string>[]).map((row: Record<string, string>) => ({
     post_type: row.post_type || "",
     caption: row.caption || "",
     like_count: parseInt(row.like_count) || 0,

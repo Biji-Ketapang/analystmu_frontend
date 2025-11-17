@@ -5,6 +5,7 @@ import { Text } from '@visx/text';
 import { Wordcloud } from '@visx/wordcloud';
 import { scaleLog } from '@visx/scale';
 import { usePostData2 } from "@/hooks/usePostData2";
+import SkeletonLoader from "@/components/common/SkeletonLoader";
 
 export default function WordCloudHashtag() {
   const { data, loading, error } = usePostData2();
@@ -15,7 +16,7 @@ export default function WordCloudHashtag() {
     setIsMounted(true);
   }, []);
 
-  if (loading) return <div>Loading...</div>;
+  if (loading) return <SkeletonLoader height={350} />;
   if (error) return <div style={{ color: "red" }}>Error: {error}</div>;
 
   if (!data || !data.hashtagWordCount) {
@@ -36,12 +37,22 @@ export default function WordCloudHashtag() {
     range: [15, 60], // Ukuran font min 15px, max 60px
   });
 
-  const fontSizeSetter = (datum: any) => fontScale(datum.value);
+  type WordDatum = {
+    text: string;
+    value: number;
+    x?: number;
+    y?: number;
+    rotate?: number;
+    size?: number;
+    font?: string;
+  };
+
+  const fontSizeSetter = (datum: WordDatum) => fontScale(datum.value);
 
   if (!isMounted) return null;
 
   return (
-    <div className="p-5 rounded-xl border bg-white dark:bg-white/5 w-full">
+    <div className="p-5 rounded-xl border bg-white dark:bg-white/5 w-full transition-all duration-300 hover:scale-[1.03] hover:shadow-xl">
       <h3 className="text-lg font-semibold mb-3">Hashtag Word Cloud (VisX)</h3>
       
       <div className="w-full h-[350px] flex justify-center items-center">
@@ -57,7 +68,7 @@ export default function WordCloudHashtag() {
           random={() => 0.5} // Agar posisi konsisten (tidak acak tiap render)
         >
           {(cloudWords) =>
-            cloudWords.map((w, i) => (
+            cloudWords.map((w: WordDatum, i: number) => (
               <Text
                 key={w.text}
                 fill={colors[i % colors.length]}

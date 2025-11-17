@@ -14,7 +14,7 @@ declare module 'react-heatmap-grid' {
     unit?: string;
     squares?: boolean;
     onClick?: (x: number, y: number) => void;
-    [key: string]: any;
+    [key: string]: unknown;
   }
 
   const HeatMap: React.ComponentType<HeatMapProps>;

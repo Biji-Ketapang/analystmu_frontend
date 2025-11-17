@@ -23,7 +23,10 @@ const navItems: NavItem[] = [
   {
     icon: <FaChartBar className="w-5 h-5" />,
     name: "Dashboard",
-    subItems: [{ name: "Summary", path: "/", pro: false }],
+    subItems: [{ name: "Summary", path: "/", pro: false },
+      { name: "Sentimen Analysis", path: "/Sentimen", pro: false },
+      { name: "Topic Modeling", path: "/Topic", pro: false },
+    ],
   },
   {
     icon: <FaCalendarAlt className="w-5 h-5" />,

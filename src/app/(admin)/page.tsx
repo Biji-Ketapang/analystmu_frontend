@@ -55,11 +55,11 @@ export default function Ecommerce() {
         <TimeDayHeatmap />
       </div>
 
-      <div className="col-span-12 xl:col-span-6">
+      <div className="col-span-12">
         <WordCloudHashtag />
       </div>
 
-      <div className="col-span-12 xl:col-span-6">
+      <div className="col-span-12">
         <HashtagTrendChart />
       </div>
 

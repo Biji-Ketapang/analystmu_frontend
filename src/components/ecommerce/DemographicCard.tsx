@@ -3,11 +3,12 @@ import Image from "next/image";
 
 import CountryMap from "./CountryMap";
 import { useState } from "react";
+import SkeletonLoader from "@/components/common/SkeletonLoader";
 import { MoreDotIcon } from "@/icons";
 import { Dropdown } from "../ui/dropdown/Dropdown";
 import { DropdownItem } from "../ui/dropdown/DropdownItem";
 
-export default function DemographicCard() {
+export default function DemographicCard({ loading }: { loading?: boolean }) {
   const [isOpen, setIsOpen] = useState(false);
 
   function toggleDropdown() {
@@ -18,8 +19,9 @@ export default function DemographicCard() {
     setIsOpen(false);
   }
 
+  if (loading) return <SkeletonLoader height={180} />;
   return (
-    <div className="rounded-2xl border border-gray-200 bg-white p-5 dark:border-gray-800 dark:bg-white/[0.03] sm:p-6">
+    <div className="rounded-2xl border border-gray-200 bg-white p-5 dark:border-gray-800 dark:bg-white/3 sm:p-6 transition-all duration-300 hover:scale-[1.03] hover:shadow-xl">
       <div className="flex justify-between">
         <div>
           <h3 className="text-lg font-semibold text-gray-800 dark:text-white/90">
