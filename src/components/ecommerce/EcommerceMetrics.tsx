@@ -1,7 +1,7 @@
 "use client";
 import React from "react";
 import Badge from "../ui/badge/Badge";
-import { FaReact, FaRegHeart, FaRegCommentDots, FaUsers, FaArrowUp } from "react-icons/fa";
+import { FaRegHeart, FaUsers, FaArrowUp, FaImages, FaRegComment } from "react-icons/fa";
 import { usePostData } from "@/hooks/usePostData";
 
 export const EcommerceMetrics = () => {
@@ -41,7 +41,7 @@ export const EcommerceMetrics = () => {
       {/* <!-- Total Postingan --> */}
       <div className="rounded-2xl border border-gray-200 bg-white p-5 dark:border-gray-800 dark:bg-white/[0.03] md:p-6">
         <div className="flex items-center justify-center w-12 h-12 bg-blue-100 rounded-xl dark:bg-blue-900/30">
-          <FaReact className="text-blue-600 dark:text-blue-400" size={32} />
+          <FaImages className="text-blue-600 dark:text-blue-400" size={32} />
         </div>
 
         <div className="flex items-end justify-between mt-5">
@@ -81,7 +81,7 @@ export const EcommerceMetrics = () => {
       {/* <!-- Rata-rata Komentar --> */}
       <div className="rounded-2xl border border-gray-200 bg-white p-5 dark:border-gray-800 dark:bg-white/[0.03] md:p-6">
         <div className="flex items-center justify-center w-12 h-12 bg-green-100 rounded-xl dark:bg-green-900/30">
-          <FaRegCommentDots className="text-green-600 dark:text-green-400" size={32} />
+          <FaRegComment className="text-green-600 dark:text-green-400" size={32} />
         </div>
 
         <div className="flex items-end justify-between mt-5">
