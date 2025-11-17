@@ -6,7 +6,10 @@ import { usePathname } from "next/navigation";
 import { useSidebar } from "../context/SidebarContext";
 import {
   FaCalendarAlt, FaChevronDown, FaListUl, FaFileAlt, FaChartPie, FaCube, FaPlug, FaTable, FaChartBar,
-  FaRegUser
+  FaRegUser,
+  FaMicrochip,
+  FaLaptopMedical,
+  FaBolt
 } from "react-icons/fa";
 import { FiMoreHorizontal } from "react-icons/fi";
 import SidebarWidget from "./SidebarWidget";
@@ -32,6 +35,11 @@ const navItems: NavItem[] = [
     icon: <FaCalendarAlt className="w-5 h-5" />,
     name: "Calendar",
     path: "/calendar",
+  },
+  {
+    icon: <FaBolt className="w-5 h-5" />,
+    name: "AI Chat",
+    path: "/Aichat",
   },
   {
     icon: <FaRegUser className="w-5 h-5" />,
@@ -311,12 +319,12 @@ const AppSidebar: React.FC = () => {
                 className="dark:hidden"
                 src="/images/logo/logo_analyst.svg"
                 alt="Logo"
-                width={200}
+                width={150}
                 height={40}
               />
               <Image
                 className="hidden dark:block"
-                src="/images/logo/logo-dark.svg"
+                src="/images/logo/logo_analyst.svg"
                 alt="Logo"
                 width={150}
                 height={40}
@@ -324,7 +332,7 @@ const AppSidebar: React.FC = () => {
             </>
           ) : (
             <Image
-              src="/images/logo/logo-icon.svg"
+              src="/images/logo/logo_icon_analyst.svg"
               alt="Logo"
               width={32}
               height={32}
