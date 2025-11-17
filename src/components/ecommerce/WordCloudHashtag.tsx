@@ -25,7 +25,7 @@ export default function WordCloudHashtag() {
 
   // Transform Data
   const words = Object.entries(data.hashtagWordCount)
-    .slice(0, 400)
+    .slice(0, 600)
     .map(([text, value]) => ({ text, value: value as number }));
 
   // Skema Warna Manual
@@ -58,7 +58,7 @@ export default function WordCloudHashtag() {
       <div className="w-full h-[350px] flex justify-center items-center">
         <Wordcloud
           words={words}
-          width={700}
+          width={800}
           height={350}
           fontSize={fontSizeSetter}
           font={'Poppins'}
