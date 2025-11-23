@@ -15,9 +15,6 @@ export function usePostData2() {
         setLoading(true);
 
         const file = "/data/pens_posts_stemming.csv";
-        // Untuk ITS dan PPNS, tetap ambil dari pens_posts_stemming.csv jika data belum tersedia
-        // if (account === "ITS") file = "/data/its_posts_stemming.csv";
-        // if (account === "PPNS") file = "/data/ppns_posts_stemming.csv";
 
         const res = await fetch(file);
         const csvText = await res.text();
