@@ -7,6 +7,22 @@ import { scaleLog } from "@visx/scale";
 import SkeletonLoader from "@/components/common/SkeletonLoader";
 import { useTopicData } from "@/hooks/usePostDataTopic";
 
+interface Word {
+  text: string;
+  value: number;
+  x?: number;
+  y?: number;
+  size?: number;
+  font?: string;
+  rotate?: number;
+}
+
+interface WordCloudTopicItem {
+  topic: number;
+  topicName: string;
+  words: Word[];
+}
+
 export default function WordCloudTopic() {
   const { data, loading, error } = useTopicData();
   const [isMounted, setIsMounted] = useState(false);
@@ -24,30 +40,38 @@ export default function WordCloudTopic() {
     return <div className="text-gray-500">Data Word Cloud tidak tersedia</div>;
 
   // Semua topic termasuk -1
-  const allTopics = data.wordCloud;
+  const allTopics: WordCloudTopicItem[] = data.wordCloud;
 
   // Default pilih topic pertama
-  const current = selectedTopic === null
-    ? allTopics[0]
-    : allTopics.find((t: any) => t.topic === selectedTopic);
+  const current =
+    selectedTopic === null
+      ? allTopics[0]
+      : allTopics.find((t) => t.topic === selectedTopic);
 
   if (!current) return <div>No topic selected</div>;
 
   const words = current.words;
 
   // warna manual
-  const colors = ["#1f77b4", "#ff7f0e", "#2ca02c", "#d62728", "#9467bd", "#0891b2"];
+  const colors = [
+    "#1f77b4",
+    "#ff7f0e",
+    "#2ca02c",
+    "#d62728",
+    "#9467bd",
+    "#0891b2",
+  ];
 
   // skala font dengan guard
-  const minValue = Math.min(...words.map((w: any) => w.value)) || 0.1;
-  const maxValue = Math.max(...words.map((w: any) => w.value)) || 1;
+  const minValue = Math.min(...words.map((w) => w.value)) || 0.1;
+  const maxValue = Math.max(...words.map((w) => w.value)) || 1;
 
   const fontScale = scaleLog({
     domain: [minValue, maxValue],
     range: [15, 60],
   });
 
-  const fontSizeSetter = (d: any) => fontScale(d.value);
+  const fontSizeSetter = (d: Word) => fontScale(d.value);
 
   return (
     <div className="p-5 rounded-xl border bg-white dark:bg-white/5 w-full transition-all duration-300 hover:shadow-xl">
@@ -60,7 +84,7 @@ export default function WordCloudTopic() {
           value={selectedTopic ?? allTopics[0].topic}
           onChange={(e) => setSelectedTopic(Number(e.target.value))}
         >
-          {allTopics.map((t: any) => (
+          {allTopics.map((t) => (
             <option key={t.topic} value={t.topic}>
               {t.topicName} {/* hanya nama topic */}
             </option>
@@ -81,8 +105,8 @@ export default function WordCloudTopic() {
           rotate={0}
           random={() => 0.5}
         >
-          {(cloudWords) =>
-            cloudWords.map((w: any, i: number) => (
+          {(cloudWords: Word[]) =>
+            cloudWords.map((w, i) => (
               <Text
                 key={w.text}
                 fill={colors[i % colors.length]}

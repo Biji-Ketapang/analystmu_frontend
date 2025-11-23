@@ -3,13 +3,13 @@ import Papa from "papaparse";
 /* =========================================================
    1. CSV PARSER
 ========================================================= */
-export function parseCSV(csvText: string) {
+export function parseCSV<T = Record<string, unknown>>(csvText: string): T[] {
   const parsed = Papa.parse(csvText, {
     header: true,
     skipEmptyLines: true,
   });
 
-  return parsed.data as Record<string, any>[];
+  return parsed.data as T[];
 }
 
 /* =========================================================
@@ -28,6 +28,7 @@ export interface TopicInsights {
 
   donutDistribution: {
     topic: number;
+    topicName: string;
     count: number;
     summary?: string;
   }[];
@@ -63,10 +64,32 @@ export interface TopicInsights {
 /* =========================================================
    3. PROCESSOR FIXED — SESUAI CSV KAMU
 ========================================================= */
+export interface DocumentTopic {
+  doc_id?: string;
+  document_id?: string;
+  text?: string;
+  topic?: number | string;
+  probability?: number | string;
+  prob?: number | string;
+  date?: string | null;
+}
+
+export interface TopicSummary {
+  Topic: string | number;
+  Count: string | number;
+  CustomName?: string;
+}
+
+export interface TopicWord {
+  topic?: number | string;
+  word?: string;
+  score?: number | string;
+}
+
 export function processTopicData(
-  documentTopics: any[],
-  topicSummary: any[],
-  topicWords: any[]
+  documentTopics: DocumentTopic[],
+  topicSummary: TopicSummary[],
+  topicWords: TopicWord[]
 ): TopicInsights {
   
   /* =========================================================
@@ -106,7 +129,7 @@ export function processTopicData(
   /* =========================================================
      2. STACKED BAR CHART
   ========================================================= */
-  const stackedMap: Record<string, any> = {};
+  const stackedMap: Record<string, { word: string; [key: string]: number | string }> = {};
   Object.entries(topicMap).forEach(([topic, words]) => {
     const tKey = `t${topic}`;
     words.forEach((w) => {

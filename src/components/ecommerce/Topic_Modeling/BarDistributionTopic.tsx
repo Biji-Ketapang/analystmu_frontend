@@ -1,20 +1,16 @@
 "use client";
 import React from "react";
 import dynamic from "next/dynamic";
-import { FiMoreVertical } from "react-icons/fi";
 import { useTopicData } from "@/hooks/usePostDataTopic";
-import { useState } from "react";
-import { Dropdown } from "@/components/ui/dropdown/Dropdown";
-import { DropdownItem } from "@/components/ui/dropdown/DropdownItem";
 import { ApexOptions } from "apexcharts";
 
 const ReactApexChart = dynamic(() => import("react-apexcharts"), { ssr: false });
 
 export default function TopicDistributionBar() {
   const { data, loading, error } = useTopicData();
-  const [isOpen, setIsOpen] = useState(false);
+  // const [isOpen, setIsOpen] = useState(false);
 
-  const closeDropdown = () => setIsOpen(false);
+  // const closeDropdown = () => setIsOpen(false);
 
   if (loading) {
     return (
@@ -36,14 +32,17 @@ export default function TopicDistributionBar() {
   /* =========================================================
       1. Format List Topik + Count
   ========================================================= */
-  const topicList = data.donutDistribution.map((d, index) => ({
-    no: index + 1,
-    name: d.topicName,
-    count: d.count,
-    desc:
-      d.summary ||
-      `Topik ${d.topicName} memiliki total ${d.count} dokumen yang membahas terkait aktivitas tersebut.`,
-  }));
+  const topicList = data.donutDistribution.map((d, index) => {
+    const name = typeof d.topicName === 'string' && d.topicName.length > 0 ? d.topicName : `Topic ${d.topic}`;
+    return {
+      no: index + 1,
+      name,
+      count: d.count,
+      desc:
+        d.summary ||
+        `Topik ${name} memiliki total ${d.count} dokumen yang membahas terkait aktivitas tersebut.`,
+    };
+  });
 
   /* =========================================================
       2. Bar Chart Data (X-axis = Topic 1, Topic 2, ...)

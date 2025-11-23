@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { parseCSV, processTopicData, TopicInsights } from "@/utils/topicProcessor";
+import { parseCSV, processTopicData, TopicInsights, DocumentTopic, TopicSummary, TopicWord } from "@/utils/topicProcessor";
 
 export function useTopicData() {
   const [data, setData] = useState<TopicInsights | null>(null);
@@ -28,9 +28,9 @@ export function useTopicData() {
         );
 
         // Parse CSV
-        const documentTopics = parseCSV(docCSV);
-        const topicSummary = parseCSV(summaryCSV);
-        const topicWords = parseCSV(wordsCSV);
+        const documentTopics = parseCSV<DocumentTopic>(docCSV);
+        const topicSummary = parseCSV<TopicSummary>(summaryCSV);
+        const topicWords = parseCSV<TopicWord>(wordsCSV);
 
         // Proses menjadi bentuk siap visualisasi
         const processed = processTopicData(documentTopics, topicSummary, topicWords);
