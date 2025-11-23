@@ -59,6 +59,9 @@ export interface TopicInsights {
     topicName: string;
     words: { text: string; value: number }[];
   }[];
+
+  /* 🔥 Tambahan: topicSummary */
+  topicSummary: TopicSummary[];
 }
 
 /* =========================================================
@@ -225,5 +228,8 @@ export function processTopicData(
     topicTrends,
     topicBubble,
     wordCloud,
+
+    /* 🔥 Tambahan: return topicSummary */
+    topicSummary,
   };
 }

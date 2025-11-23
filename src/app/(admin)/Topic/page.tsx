@@ -1,40 +1,47 @@
 "use client";
 
 import { useTopicData } from "@/hooks/usePostDataTopic";
-// import BarTopWords from "@/components/ecommerce/Topic_Modeling/BarTopWords";
-// import StackedTopWords from "@/components/ecommerce/Topic_Modeling/BarTopWords";
-// import DonutDistribution from "@/components/ecommerce/Topic_Modeling/DonutDistribution";
+import TopicProbabilityDistributionChart from "@/components/ecommerce/Topic_Modeling/TopicProbabilityDistributionChart";
+import VoiceOfStudentsTable from "@/components/ecommerce/Topic_Modeling/VoiceOfStudentsTable";
 import TopicDistributionBar from "@/components/ecommerce/Topic_Modeling/BarDistributionTopic";
 import WordCloudTopic from "@/components/ecommerce/Topic_Modeling/WordCloudTopic";
 
 export default function TopicDashboard() {
   const { data, loading, error } = useTopicData();
 
-  if (loading) return <p>Loading...</p>;
-  if (error || !data) return <p>Error: {error}</p>;
-
-console.log("DATA MASUK:", data);
-console.log("BAR TOP WORDS:", data.barTopWords);
-
+  if (loading) return <div className="p-10 text-center">Loading Analytics...</div>;
+  if (error || !data) return <div className="p-10 text-center text-red-500">Error: {error}</div>;
 
   return (
-    <div className="space-y-12">
-      {/* <div className="col-span-12 bg-white p-5">
-      <BarTopWords data={data} />
-      </div> */}
-      
-      <div className="col-span-12">
-      <TopicDistributionBar />
+    <div className="space-y-8 pb-10">
+      {/* Header Section (Optional) */}
+      <div>
+        <h1 className="text-2xl font-bold text-gray-900">Topic Modelling Analysis</h1>
+        <p className="text-gray-500">Analisis topik percakapan sosial media PENS secara otomatis.</p>
       </div>
 
-      <div className="col-span-12">
-      <WordCloudTopic />
+      <div className="grid grid-cols-12 gap-6">
+        {/* Bar Chart & Word Cloud berdampingan jika layar besar */}
+        <div className="col-span-12 lg:col-span-12">
+          <TopicDistributionBar />
+        </div>
+        <div className="col-span-12 lg:col-span-12">
+          <WordCloudTopic />
+        </div>
       </div>
-      {/* Nanti tambah komponen lain */}
-      {/* <DonutTopicDistribution data={data} />
-      <DocTopicsTable data={data} />
-      <TopicTrendsChart data={data} />
-      <TopicBubbleChart data={data} /> */}
+
+      {/* Probability Chart */}
+      <div className="col-span-12">
+        <TopicProbabilityDistributionChart />
+      </div>
+      
+      {/* Table Detail - Pass topicSummary here! */}
+      <div className="col-span-12">
+        <VoiceOfStudentsTable 
+          data={data.docTopicsTable} 
+          topicSummary={data.topicSummary} // Pastikan hook Anda me-return ini
+        />
+      </div>
     </div>
   );
 }
