@@ -36,7 +36,7 @@ const navItems: NavItem[] = [
   },
   {
     icon: <FaBolt className="w-5 h-5" />,
-    name: "AI Chat",
+    name: "Caption AI",
     path: "/Aichat",
   },
   {
