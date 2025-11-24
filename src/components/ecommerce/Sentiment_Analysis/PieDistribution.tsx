@@ -28,7 +28,7 @@ export default function SentimentDistribution() {
         header: true,
         skipEmptyLines: true,
         complete: (result) => {
-          const parsed = result.data.map((row: any) => ({
+          const parsed = result.data.map((row: { sentiment: string; sentiment_counts: string; sentiment_percentage: string }) => ({
             sentiment: row.sentiment,
             count: Number(row.sentiment_counts),
             percentage: Number(row.sentiment_percentage),

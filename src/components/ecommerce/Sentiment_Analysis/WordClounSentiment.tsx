@@ -45,7 +45,7 @@ export default function WordCloudTopic() {
       header: true,
       skipEmptyLines: true,
       complete: (result) => {
-        const captions: string[] = result.data.map((row: any) => row.caption);
+        const captions: string[] = result.data.map((row: { caption: string }) => row.caption);
 
         // Hitung frekuensi kata
         const freq: Record<string, number> = {};
@@ -85,7 +85,7 @@ export default function WordCloudTopic() {
   /** load default */
   useEffect(() => {
     loadSentimentCSV(selectedSentiment);
-  }, [selectedSentiment]);
+  }, [selectedSentiment, loadSentimentCSV]);
 
   if (loading) return <SkeletonLoader height={350} />;
 

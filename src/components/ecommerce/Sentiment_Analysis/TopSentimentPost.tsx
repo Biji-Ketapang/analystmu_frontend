@@ -38,7 +38,7 @@ export default function TopEngagementPostsCSV() {
         header: true,
         skipEmptyLines: true,
         complete: (result) => {
-          const parsed: PostData[] = result.data.map((row: any) => ({
+          const parsed: PostData[] = result.data.map((row: { caption: string; sentiment_label: string; like_count: string; comment_count: string; engagement_rate: string }) => ({
             caption: row.caption,
             sentiment_label: row.sentiment_label,
             like_count: Number(row.like_count),
