@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import Papa from "papaparse";
 import { Wordcloud } from "@visx/wordcloud";
 import { Text } from "@visx/text";
@@ -35,7 +35,7 @@ export default function WordCloudTopic() {
   /** -------------------------
    *  LOAD CSV PER SENTIMENT
    *  ------------------------- */
-  const loadSentimentCSV = async (sentiment: string) => {
+  const loadSentimentCSV = useCallback(async (sentiment: string) => {
     setLoading(true);
 
     const response = await fetch(sentimentFiles[sentiment]);
@@ -63,29 +63,23 @@ export default function WordCloudTopic() {
             });
         });
 
-        // const wcWords: Word[] = Object.keys(freq).map((key) => ({
-        //   text: key,
-        //   value: freq[key],
-        // }));
-
-        // setWords(wcWords);
         // Batasi 100 kata teratas
         const limited: Word[] = Object.keys(freq)
-        .map((key) => ({ text: key, value: freq[key] }))
-        .sort((a, b) => b.value - a.value)
-        .slice(0, 100);
+          .map((key) => ({ text: key, value: freq[key] }))
+          .sort((a, b) => b.value - a.value)
+          .slice(0, 100);
 
         setWords(limited);
-
         setLoading(false);
       },
     });
-  };
+  }, [sentimentFiles]);
 
   /** load default */
   useEffect(() => {
     loadSentimentCSV(selectedSentiment);
-  }, [selectedSentiment, loadSentimentCSV]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [selectedSentiment]);
 
   if (loading) return <SkeletonLoader height={350} />;
 
