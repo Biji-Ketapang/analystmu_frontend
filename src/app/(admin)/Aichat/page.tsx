@@ -16,7 +16,7 @@ export default function AIChat() {
     setLoading(true);
     setAiAnswer("");
     try {
-      const endpoint = "https://aspiratory-jamey-winterly.ngrok-free.dev/generate";
+      const endpoint = "/api/proxy";
       const response = await fetch(endpoint, {
         method: "POST",
         headers: {
